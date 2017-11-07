@@ -5,6 +5,7 @@ var __API_URL__ = 'https://todo-dupe.herokuapp.com';
 
 (function(module) {
   function errorCallback(err) {
+    console.error(err);
     module.errorView.initErrorPage(err);
   }
 
@@ -28,6 +29,11 @@ var __API_URL__ = 'https://todo-dupe.herokuapp.com';
       .then(Task.loadAll)
       .then(callback)
       .catch(errorCallback);
+
+  Task.createTask = task =>
+  $.post(`${__API_URL__}/tasks/add`, task)
+    .then(() => page('/'))
+    .catch(errorCallback);
 
   module.Task = Task;
 })(app)
